@@ -14,5 +14,29 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('admin');
 });
+
+Route::get('/1', function () {
+    return view('index-1');
+});
+
+Route::get('/email', function () {
+    return view('email');
+});
+
+Route::get('/typo', function () {
+    return view('typograpy');
+});
+
+Route::get('/alert', function () {
+    return view('alert');
+});
+
+Route::get('/buttons', function () {
+    return view('buttons');
+});
+
+
+
+
