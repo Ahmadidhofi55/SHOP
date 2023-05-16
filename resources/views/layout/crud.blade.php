@@ -5,24 +5,19 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>ORNOTSHOP | @yield('title')</title>
-    <link rel="shortcut icon" href="{{ URL::to('/') }}/favicon.png" type="image/x-icon">
+    <link rel="shortcut icon" href="./favicon.png" type="image/x-icon">
     <!--Aos -->
-    <link rel="stylesheet" href="{{ URL::to('/') }}/dist/css/aos.css">
+    <link rel="stylesheet" href="./dist/css/aos.css">
     <!-- Google Font: Source Sans Pro -->
     <link rel="stylesheet"
         href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
     <!-- Font Awesome Icons -->
-    <link rel="stylesheet" href="{{ URL::to('/') }}/plugins/fontawesome-free/css/all.min.css">
+    <link rel="stylesheet" href="./plugins/fontawesome-free/css/all.min.css">
     <!-- overlayScrollbars -->
-    <link rel="stylesheet" href="{{ URL::to('/') }}/plugins/overlayScrollbars/css/OverlayScrollbars.min.css">
+    <link rel="stylesheet" href="./plugins/overlayScrollbars/css/OverlayScrollbars.min.css">
     <!-- Theme style -->
-    <link rel="stylesheet" href="{{ URL::to('/') }}/dist/css/adminlte.min.css">
+    <link rel="stylesheet" href="./dist/css/adminlte.min.css">
 </head>
-@php
-if (auth()->check()){
-$user = auth()->user();
-}
-@endphp
 
 <body class="hold-transition dark-mode sidebar-mini layout-fixed layout-navbar-fixed layout-footer-fixed">
     @include('sweetalert::alert')
@@ -30,7 +25,7 @@ $user = auth()->user();
 
         <!-- Preloader -->
         <div class="preloader flex-column justify-content-center align-items-center">
-            <img class="animation__wobble" src="{{ URL::to('/') }}/ORNOTDEV.png" alt="ORNOTDEV-LOGO" height="60" width="60">
+            <img class="animation__wobble" src="./ORNOTDEV.png" alt="ORNOTDEV-LOGO" height="60" width="60">
         </div>
 
         <!-- Navbar -->
@@ -54,50 +49,6 @@ $user = auth()->user();
                         <i class="fas fa-th-large"></i>
                     </a>
                 </li>
-                <li class="nav-item dropdown user user-menu">
-                    <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">
-                        @if (is_object($user) && property_exists($user, 'img'))
-                        <img src="{{ $user->img }}" class="img-circle" alt="img-user">
-                        @else
-                          <i class="fas fa-user fa-1x"></i>
-                        @endif
-                        <span class="hidden-xs">{{ $user->name }}</span>
-                    </a>
-                    <ul class="dropdown-menu">
-                        <!-- User image -->
-                        <li class="user-header">
-                            @if (is_object($user) && property_exists($user, 'img'))
-                            <img src="{{ asset($user->img) }}" class="img-circle" alt="img-user">
-                            @else
-                              <i class="fas fa-user fa-8x"></i>
-                            @endif
-                            <p>
-                                {{ $user->name }}
-                            </p>
-                        </li>
-                        <!-- Menu Footer-->
-                        <li class="user-footer">
-                            <div class="container">
-                                <div class="row">
-                                    <div class="col">
-                                        <div class="pull-left">
-                                            <a href="" class="btn btn-default btn-flat ">Profile</a>
-                                        </div>
-                                    </div>
-                                    <div class="col">
-                                        <div class="pull-right">
-                                            <form id="logout-form" action="{{ route('logout') }}" method="POST">
-                                                @csrf
-                                                <button type="submit" class="btn btn-default btn-flat">{{ __('Logout')
-                                                    }}</button>
-                                            </form>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </li>
-                    </ul>
-                </li>
             </ul>
         </nav>
         <!-- /.navbar -->
@@ -106,13 +57,23 @@ $user = auth()->user();
         <aside class="main-sidebar sidebar-dark-primary elevation-4">
             <!-- Brand Logo -->
             <a href="/admin" class="brand-link">
-                <img src="{{ URL::to('/') }}/ORNOTDEV.png" alt="AdminLTE Logo" class="brand-image img-circle elevation-3"
+                <img src="./ORNOTDEV.png" alt="AdminLTE Logo" class="brand-image img-circle elevation-3"
                     style="opacity: .8">
                 <span class="brand-text font-weight-light">ORNOTSHOP</span>
             </a>
 
             <!-- Sidebar -->
             <div class="sidebar">
+                <!-- Sidebar user panel (optional) -->
+                <div class="user-panel mt-3 pb-3 mb-3 d-flex">
+                    <div class="image">
+
+                    </div>
+                    <div class="info">
+                        <a href="/admin" class="d-block"> Admin</a>
+                    </div>
+                </div>
+
                 <!-- Sidebar Menu -->
                 <nav class="mt-2">
                     <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu"
@@ -143,7 +104,7 @@ $user = auth()->user();
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="{{ route('user.index') }}" class="nav-link">
+                            <a href="pages/widgets.html" class="nav-link">
                                 <i class="nav-icon fas fa-user"></i>
                                 <p>
                                     User
@@ -152,7 +113,7 @@ $user = auth()->user();
                         </li>
                         <li class="nav-item">
                             <a href="pages/widgets.html" class="nav-link">
-                                <i class="nav-icon fas fa-shopping-bag"></i>
+                                <i class="nav-icon fas fa-user"></i>
                                 <p>
                                     Produk
                                 </p>
@@ -160,7 +121,7 @@ $user = auth()->user();
                         </li>
                         <li class="nav-item">
                             <a href="pages/widgets.html" class="nav-link">
-                                <img src="{{ URL::to('/') }}/brand.png" class="" width="26px" alt="">
+                                <img src="./brand.png" class="" width="26px" alt="">
                                 <p>
                                     Merek
                                 </p>
@@ -194,7 +155,7 @@ $user = auth()->user();
                             <ul class="nav nav-treeview">
                                 <li class="nav-item">
                                     <a href="pages/layout/top-nav.html" class="nav-link">
-                                        <img src="{{ URL::to('/') }}/order.png" class="" width="26px" alt="order">
+                                        <img src="./order.png" class="" width="26px" alt="order">
                                         <p>Order</p>
                                     </a>
                                 </li>
@@ -202,7 +163,7 @@ $user = auth()->user();
                             <ul class="nav nav-treeview">
                                 <li class="nav-item">
                                     <a href="pages/layout/top-nav.html" class="nav-link">
-                                        <img src="{{ URL::to('/') }}/order.png" class="" width="26px" alt="order-dt">
+                                        <img src="./order.png" class="" width="26px" alt="order-dt">
                                         <p>Order Details</p>
                                     </a>
                                 </li>
@@ -210,7 +171,7 @@ $user = auth()->user();
                             <ul class="nav nav-treeview">
                                 <li class="nav-item">
                                     <a href="pages/layout/top-nav.html" class="nav-link">
-                                        <img src="{{ URL::to('/') }}/pembayaran.png" width="26px" alt="pembayaran">
+                                        <img src="./pembayaran.png" width="26px" alt="pembayaran">
                                         <p>Pembayaran</p>
                                     </a>
                                 </li>
@@ -271,25 +232,25 @@ $user = auth()->user();
 
     <!-- REQUIRED SCRIPTS -->
     <!-- jQuery -->
-    <script src="{{ URL::to('/') }}/plugins/jquery/jquery.min.js"></script>
+    <script src="./plugins/jquery/jquery.min.js"></script>
     <!-- Bootstrap -->
-    <script src="{{ URL::to('/') }}/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="./plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
     <!-- overlayScrollbars -->
-    <script src="{{ URL::to('/') }}/plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js"></script>
+    <script src="./plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js"></script>
     <!-- AdminLTE App -->
-    <script src="{{ URL::to('/') }}/dist/js/adminlte.js"></script>
+    <script src="./dist/js/adminlte.js"></script>
 
     <!-- PAGE PLUGINS -->
     <!-- jQuery Mapael -->
-    <script src="{{ URL::to('/') }}/plugins/jquery-mousewheel/jquery.mousewheel.js"></script>
-    <script src="{{ URL::to('/') }}/plugins/raphael/raphael.min.js"></script>
-    <script src="{{ URL::to('/') }}/plugins/jquery-mapael/jquery.mapael.min.js"></script>
-    <script src="{{ URL::to('/') }}/plugins/jquery-mapael/maps/usa_states.min.js"></script>
+    <script src="./plugins/jquery-mousewheel/jquery.mousewheel.js"></script>
+    <script src="./plugins/raphael/raphael.min.js"></script>
+    <script src="./plugins/jquery-mapael/jquery.mapael.min.js"></script>
+    <script src="./plugins/jquery-mapael/maps/usa_states.min.js"></script>
     <!-- ChartJS -->
-    <script src="{{ URL::to('/') }}/plugins/chart.js/Chart.min.js"></script>
-    <script src="{{ URL::to('/') }}/dist/js/demo.js"></script>
-    <script src="{{ URL::to('/') }}/dist/js/pages/dashboard2.js"></script>
-    <script src="{{ URL::to('/') }}/dist/js/aos.js"></script>
+    <script src="./plugins/chart.js/Chart.min.js"></script>
+    <script src="./dist/js/demo.js"></script>
+    <script src="./dist/js/pages/dashboard2.js"></script>
+    <script src="./dist/js/aos.js"></script>
 </body>
 
 </html>

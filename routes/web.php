@@ -1,6 +1,9 @@
 <?php
 
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\UserController;
+use App\Http\Controllers\HomeController;
 
 /*
 |--------------------------------------------------------------------------
@@ -17,10 +20,18 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/admin', function(){
-  return view('admin.admin');
-});
 
-Route::get('/user', function(){
+
+/* Route::get('/user', function(){
     return view('users.index');
+})->name('user'); */
+
+
+Auth::routes();
+
+Route::get('home', [HomeController::class, 'index'])->name('home');
+Route::get('/admin', [HomeController::class, 'adminHome'])->name('admin.home')->middleware('is_admin');
+
+Route::middleware(['auth'])->group(function () {
+    Route::resource('user',UserController::class);
 });

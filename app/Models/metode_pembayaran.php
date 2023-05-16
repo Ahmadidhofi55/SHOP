@@ -8,4 +8,8 @@ use Illuminate\Database\Eloquent\Model;
 class metode_pembayaran extends Model
 {
     use HasFactory;
+    protected $fillable = [
+        'nm_metode',
+        'img',
+      ];
 }

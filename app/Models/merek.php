@@ -8,4 +8,9 @@ use Illuminate\Database\Eloquent\Model;
 class merek extends Model
 {
     use HasFactory;
+
+    protected $fillable = [
+      'nm_merek',
+      'img',
+    ];
 }
