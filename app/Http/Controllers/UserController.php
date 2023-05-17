@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 use RealRashid\SweetAlert\Facades\Alert;
 
@@ -38,29 +40,30 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        $validate = Validator::make($request->all(),[
-           'name' => 'required|string',
-           'img' => 'required|mimes:png,jpg',
-           'email' => 'required|email',
-           'password' => 'required|min:4'
+        $this->validate($request,[
+            'name' => 'required|string',
+            'img' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'email' => 'required|email',
+            'is_admin' => 'required',
+            'password' => 'required|min:4'
         ]);
 
-        $image = $request->file('image');
-        $image->storeAs('public/posts', $image->hashName());
+        $image = $request->file('img')->store('public/img');
+        $image = str_replace('public/', 'storage/', $image);
 
        $user = User::create([
            'name' => $request->name,
            'email' => $request->email,
            'img' => $image,
-           'password' => $request->password,
+           'password' => Hash::make($request->password),
        ]);
 
        if($user){
+           Alert::success('Berhasil', 'Data Berhasil Ditambahkan');
           return redirect()->route('user.index');
-          Alert::success('Berhasil', 'Data Berhasil Ditambahkan');
        }else{
+           Alert::error('Erro', 'Data Gagal Ditambahkan');
          return redirect()->route('user.index');
-         Alert::error('Erro', 'Data Gagal Ditambahkan');
        }
     }
 
@@ -83,7 +86,7 @@ class UserController extends Controller
      */
     public function edit(User $user)
     {
-        //
+        return view('users.edit',compact('user'));
     }
 
     /**
@@ -95,7 +98,37 @@ class UserController extends Controller
      */
     public function update(Request $request, User $user)
     {
-        //
+        $this->validate($request,[
+            'name' => 'required|string',
+            'img' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'email' => 'required|email',
+            'is_admin' => 'required',
+            'password' => 'required|min:4'
+        ]);
+
+        if ($request->hasFile('img')) {
+            $image = $request->file('img')->store('public/image');
+            $image = str_replace('public/', 'storage/', $image);
+
+            Storage::delete(str_replace('storage/', 'public/', $user->img));
+
+            $user->update([
+                'name' => $request->name,
+                'email' => $request->email,
+                'password'=> Hash::make($request->password),
+                'is_admin'=> $request->is_admin,
+                'img' => $image,
+            ]);
+        } else {
+            $user->update([
+                'name' => $request->name,
+                'email' => $request->email,
+                'password'=> Hash::make($request->password),
+                'is_admin'=> $request->is_admin,
+            ]);
+        }
+
+        return redirect()->route('user.index')->with(['success' => 'Data Berhasil Diubah!']);
     }
 
     /**
@@ -106,6 +139,11 @@ class UserController extends Controller
      */
     public function destroy(User $user)
     {
-        //
+        if ($user->img) {
+            Storage::delete(str_replace('storage/', 'public/', $user->img));
+            $user->save();
+            $user->delete();
+            return redirect()->route('user.index')->with(['success' => 'Data Berhasil Dihapus!']);
+        }
     }
 }

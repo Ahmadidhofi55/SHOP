@@ -15,7 +15,8 @@ class MerekController extends Controller
      */
     public function index()
     {
-        //
+        $merek = merek::paginate();
+        return view('merek.index',compact('merek'));
     }
 
     /**

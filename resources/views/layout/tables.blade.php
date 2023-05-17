@@ -124,7 +124,7 @@
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="pages/widgets.html" class="nav-link">
+                            <a href="{{ route('merek.index') }}" class="nav-link">
                                 <img src="./brand.png" class="" width="26px" alt="">
                                 <p>
                                     Merek
