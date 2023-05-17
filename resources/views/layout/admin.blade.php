@@ -159,7 +159,7 @@ $user = auth()->user();
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="pages/widgets.html" class="nav-link">
+                            <a href="{{ route('merek.index') }}" class="nav-link">
                                 <img src="{{ URL::to('/') }}/brand.png" class="" width="26px" alt="">
                                 <p>
                                     Merek

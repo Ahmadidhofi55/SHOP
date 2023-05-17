@@ -9,7 +9,7 @@
     <div class="col-12">
         <div class="card">
             <div class="card-header">
-                <a href="{{ route('user.create') }}" class="btn btn-primary mb-2" >Create </a>
+                <a href="{{ route('merek.create') }}" class="btn btn-primary mb-2" >Create </a>
             </div>
             <!-- /.card-header -->
             <div class="card-body">
@@ -17,26 +17,22 @@
                     <thead>
                         <tr>
                             <th>No.</th>
-                            <th>Name</th>
+                            <th>merek</th>
                             <th>image</th>
-                            <th>Email</th>
-                            <th>Password</th>
                             <th>Aksi</th>
                         </tr>
                     </thead>
                     <tbody>
-                        @forelse ( $user as $user )
+                        @forelse ( $merek as $merek )
                         <tr >
-                            <td>{{ $user->id }} .</td>
-                            <td>{{ $user->name }}</td>
+                            <td>{{ $merek->id }} .</td>
+                            <td>{{ $merek->nm_merek }}</td>
                             <td>
-                                <img src="{{  asset($user->img) }}" class="img-circle" width="100px" alt="user-img">
+                                <img src="{{  asset($merek->img) }}" class="img-circle" width="100px" alt="user-img">
                             </td>
-                            <td>{{ $user->email }}</td>
-                            <td>{{ $user->password }}</td>
                             <td class="text-center">
-                                <form onsubmit="return confirm('Apakah Anda Yakin ?');" action="{{ route('user.destroy', $user->id) }}" method="POST">
-                                    <a href="{{ route('user.edit', $user->id) }}" class="btn btn-sm btn-primary"><i class="fas fa-pen"></i></a>
+                                <form onsubmit="return confirm('Apakah Anda Yakin ?');" action="{{ route('merek.destroy', $merek->id) }}" method="POST">
+                                    <a href="{{ route('merek.edit', $merek->id) }}" class="btn btn-sm btn-primary"><i class="fas fa-pen"></i></a>
                                     @csrf
                                     @method('DELETE')
                                     <button type="submit" class="btn btn-sm btn-danger"><i class="fas fa-trash"></i></button>

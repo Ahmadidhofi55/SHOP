@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\MerekController;
 
 /*
 |--------------------------------------------------------------------------
@@ -34,4 +35,5 @@ Route::get('/admin', [HomeController::class, 'adminHome'])->name('admin.home')->
 
 Route::middleware(['auth'])->group(function () {
     Route::resource('user',UserController::class);
+    Route::resource('merek',MerekController::class);
 });
