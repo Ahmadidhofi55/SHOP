@@ -15,5 +15,15 @@ class produk extends Model
         'kategori_id',
         'deskripsi',
         'harga'
-      ];
+    ];
+
+    public function kategori()
+    {
+        return $this->belongsTo(kategori::class);
+    }
+
+    public function merek()
+    {
+        return $this->belongsTo(merek::class);
+    }
 }

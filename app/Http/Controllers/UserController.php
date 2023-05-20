@@ -103,7 +103,7 @@ class UserController extends Controller
             'name' => 'required|string',
             'img' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
             'email' => 'string',
-            'is_admin' => '',
+            'is_admin' => 'required',
             'password' => ''
         ]);
 
