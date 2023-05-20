@@ -3,8 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\metode_pembayaran;
-use App\Http\Requests\Storemetode_pembayaranRequest;
 use App\Http\Requests\Updatemetode_pembayaranRequest;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
+use RealRashid\SweetAlert\Facades\Alert;
 
 class MetodePembayaranController extends Controller
 {
@@ -15,7 +17,8 @@ class MetodePembayaranController extends Controller
      */
     public function index()
     {
-        //
+        $wallet = metode_pembayaran::paginate();
+        return view('wallet.index',compact('wallet'));
     }
 
     /**
@@ -25,7 +28,7 @@ class MetodePembayaranController extends Controller
      */
     public function create()
     {
-        //
+        return view('wallet.create');
     }
 
     /**
@@ -34,9 +37,29 @@ class MetodePembayaranController extends Controller
      * @param  \App\Http\Requests\Storemetode_pembayaranRequest  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Storemetode_pembayaranRequest $request)
+    public function store(Request $request)
     {
-        //
+        $this->validate($request,[
+            'nm_metode' => 'required|string',
+            'img' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+        ]);
+
+        $image = $request->file('img')->store('public/img');
+        $image = str_replace('public/','storage/',$image);
+
+        $wallet = metode_pembayaran::create([
+            'nm_metode' => $request->nm_metode,
+            'img' => $image,
+        ]);
+
+        if ($wallet) {
+            Alert::success('Berhasil', 'Data Berhasil Ditambahkan');
+            return redirect()->route('wallet.index');
+        } else {
+            Alert::error('error', 'Data Gagal Ditambahkan');
+            return redirect()->route('wallet.index');
+        }
+
     }
 
     /**
@@ -45,9 +68,9 @@ class MetodePembayaranController extends Controller
      * @param  \App\Models\metode_pembayaran  $metode_pembayaran
      * @return \Illuminate\Http\Response
      */
-    public function show(metode_pembayaran $metode_pembayaran)
+    public function show(metode_pembayaran $wallet)
     {
-        //
+        return view('wallet.show',compact('wallet'));
     }
 
     /**
@@ -56,9 +79,9 @@ class MetodePembayaranController extends Controller
      * @param  \App\Models\metode_pembayaran  $metode_pembayaran
      * @return \Illuminate\Http\Response
      */
-    public function edit(metode_pembayaran $metode_pembayaran)
+    public function edit(metode_pembayaran $wallet)
     {
-        //
+        return view('wallet.edit',compact('wallet'));
     }
 
     /**
@@ -68,9 +91,33 @@ class MetodePembayaranController extends Controller
      * @param  \App\Models\metode_pembayaran  $metode_pembayaran
      * @return \Illuminate\Http\Response
      */
-    public function update(Updatemetode_pembayaranRequest $request, metode_pembayaran $metode_pembayaran)
+    public function update(Request $request, metode_pembayaran $wallet)
     {
-        //
+        $this->validate($request,[
+            'nm_metode' => 'required|string',
+            'img' => 'mimes:jpeg,png,jpg,gif,svg|max:2048',
+        ]);
+
+        if ($request->hasFile('img')) {
+            $image = $request->file('img')->store('public/image');
+            $image = str_replace('public/', 'storage/', $image);
+
+            Storage::delete(str_replace('storage/', 'public/', $wallet->img));
+
+            $wallet->update([
+                'nm_metode' => $request->nm_metode,
+                'img' => $image,
+                ]);
+                Alert::success('Berhasil', 'Data Berhasil Ditambahkan');
+               return redirect()->route('merek.index');
+
+        } else {
+            $wallet->update([
+                'nm_metode' => $request->nm_metode,
+            ]);
+            Alert::success('Berhasil', 'Data Berhasil Ditambahkan');
+          return redirect()->route('merek.index');
+        }
     }
 
     /**
@@ -79,8 +126,13 @@ class MetodePembayaranController extends Controller
      * @param  \App\Models\metode_pembayaran  $metode_pembayaran
      * @return \Illuminate\Http\Response
      */
-    public function destroy(metode_pembayaran $metode_pembayaran)
+    public function destroy(metode_pembayaran $wallet)
     {
-        //
+        if ($wallet->img) {
+            Storage::delete(str_replace('storage/', 'public/', $wallet->img));
+            $wallet->save();
+            $wallet->delete();
+            return redirect()->route('wallet.index')->with(['success' => 'Data Berhasil Dihapus!']);
+        }
     }
 }

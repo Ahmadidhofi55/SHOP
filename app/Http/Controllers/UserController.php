@@ -54,6 +54,7 @@ class UserController extends Controller
        $user = User::create([
            'name' => $request->name,
            'email' => $request->email,
+           'is_admin' => $request->is_admin,
            'img' => $image,
            'password' => Hash::make($request->password),
        ]);
@@ -62,7 +63,7 @@ class UserController extends Controller
            Alert::success('Berhasil', 'Data Berhasil Ditambahkan');
           return redirect()->route('user.index');
        }else{
-           Alert::error('Erro', 'Data Gagal Ditambahkan');
+           Alert::error('Error', 'Data Gagal Ditambahkan');
          return redirect()->route('user.index');
        }
     }
@@ -75,7 +76,7 @@ class UserController extends Controller
      */
     public function show(User $user)
     {
-        //
+        return view('users.show',compact('user'));
     }
 
     /**
@@ -101,9 +102,9 @@ class UserController extends Controller
         $this->validate($request,[
             'name' => 'required|string',
             'img' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-            'email' => 'required|email',
-            'is_admin' => 'required',
-            'password' => 'required|min:4'
+            'email' => 'string',
+            'is_admin' => '',
+            'password' => ''
         ]);
 
         if ($request->hasFile('img')) {

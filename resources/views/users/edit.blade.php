@@ -51,8 +51,8 @@
                         <label>Pilih Akses</label>
                         <select class="form-control select2 @error('is_admin') is-invalid @enderror" name="is_admin" id="is-admin" style="width: 100%;">
                           <option  selected="selected">--</option>
-                          <option value="0">Admin</option>
-                          <option value="1">User</option>
+                          <option value="1">Admin</option>
+                          <option value="0">User</option>
                         </select>
                       </div>
 
@@ -75,7 +75,7 @@
                         @enderror
                     </div>
 
-                    <button type="submit" class="btn btn-md btn-primary">SIMPAN</button>
+                    <button type="submit" class="btn btn-md btn-primary">UPDATE</button>
                     <button type="reset" class="btn btn-md btn-danger">RESET</button>
 
                 </form>

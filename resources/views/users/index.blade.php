@@ -21,21 +21,24 @@
                             <th>image</th>
                             <th>Email</th>
                             <th>Password</th>
+                            <th>Akses</th>
                             <th>Aksi</th>
                         </tr>
                     </thead>
                     <tbody>
                         @forelse ( $user as $user )
                         <tr >
-                            <td>{{ $user->id }} .</td>
+                            <td>{{ $loop->iteration }} .</td>
                             <td>{{ $user->name }}</td>
                             <td>
                                 <img src="{{  asset($user->img) }}" class="img-circle" width="100px" alt="user-img">
                             </td>
                             <td>{{ $user->email }}</td>
                             <td>{{ $user->password }}</td>
+                            <td>{{ $user->is_admin }}</td>
                             <td class="text-center">
                                 <form onsubmit="return confirm('Apakah Anda Yakin ?');" action="{{ route('user.destroy', $user->id) }}" method="POST">
+                                    <a href="{{ route('user.show',$user->id) }}" class="btn btn-sm btn-success"><i class="fas fa-eye"></i></a>
                                     <a href="{{ route('user.edit', $user->id) }}" class="btn btn-sm btn-primary"><i class="fas fa-pen"></i></a>
                                     @csrf
                                     @method('DELETE')

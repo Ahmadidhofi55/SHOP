@@ -22,7 +22,11 @@
     <!-- Theme style -->
     <link rel="stylesheet" href="dist/css/adminlte.min.css">
 </head>
-
+@php
+if (auth()->check()){
+$user = auth()->user();
+}
+@endphp
 <body class="hold-transition dark-mode sidebar-mini layout-fixed layout-navbar-fixed layout-footer-fixed">
     @include('sweetalert::alert')
     <div class="wrapper">
@@ -53,6 +57,50 @@
                         <i class="fas fa-th-large"></i>
                     </a>
                 </li>
+                <li class="nav-item dropdown user user-menu">
+                    <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">
+                        @if (is_object($user) && property_exists($user, 'img') && !empty($user->img))
+                        <img src="{{ asset($user->img) }}" class="img-circle" alt="img-user">
+                        @else
+                        <i class="fas fa-user fa-1x"></i>
+                      @endif
+                      <span class="hidden-xs">{{ $user->name }}</span>
+                    </a>
+                    <ul class="dropdown-menu">
+                        <!-- User image -->
+                        <li class="user-header">
+                            @if (is_object($user) && property_exists($user, 'img'))
+                            <i class="fas fa-user fa-8x"></i>
+                            @else
+                            <img src="{{ asset($user->img) }}" class="img-circle" alt="img-user">
+                            @endif
+                            <p>
+                                {{ $user->name }}
+                            </p>
+                        </li>
+                        <!-- Menu Footer-->
+                        <li class="user-footer">
+                            <div class="container">
+                                <div class="row">
+                                    <div class="col">
+                                        <div class="pull-left">
+                                            <a href="" class="btn btn-default btn-flat ">Profile</a>
+                                        </div>
+                                    </div>
+                                    <div class="col">
+                                        <div class="pull-right">
+                                            <form id="logout-form" action="{{ route('logout') }}" method="POST">
+                                                @csrf
+                                                <button type="submit" class="btn btn-default btn-flat">{{ __('Logout')
+                                                    }}</button>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </li>
             </ul>
         </nav>
         <!-- /.navbar -->
@@ -69,14 +117,6 @@
             <!-- Sidebar -->
             <div class="sidebar">
                 <!-- Sidebar user panel (optional) -->
-                <div class="user-panel mt-3 pb-3 mb-3 d-flex">
-                    <div class="image">
-
-                    </div>
-                    <div class="info">
-                        <a href="/admin" class="d-block"> Admin</a>
-                    </div>
-                </div>
 
                 <!-- Sidebar Menu -->
                 <nav class="mt-2">
@@ -108,7 +148,7 @@
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="pages/widgets.html" class="nav-link">
+                            <a href="{{ route('user.index') }}" class="nav-link">
                                 <i class="nav-icon fas fa-user"></i>
                                 <p>
                                     User
@@ -132,7 +172,7 @@
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="pages/widgets.html" class="nav-link">
+                            <a href="{{ route('kategori.index') }}" class="nav-link">
                                 <i class="nav-icon fas fa-list-ol"></i>
                                 <p>
                                     Kategori
@@ -140,7 +180,7 @@
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="pages/widgets.html" class="nav-link">
+                            <a href="{{ route('wallet.index') }}" class="nav-link">
                                 <i class="nav-icon fas fa-wallet"></i>
                                 <p>
                                     Wallet
@@ -250,7 +290,6 @@
     <script src="plugins/raphael/raphael.min.js"></script>
     <script src="plugins/jquery-mapael/jquery.mapael.min.js"></script>
     <script src="plugins/jquery-mapael/maps/usa_states.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 
 <!-- DataTables  & Plugins -->
 <script src="plugins/datatables/jquery.dataTables.min.js"></script>

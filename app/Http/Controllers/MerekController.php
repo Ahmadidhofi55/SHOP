@@ -3,8 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\merek;
-use App\Http\Requests\StoremerekRequest;
-use App\Http\Requests\UpdatemerekRequest;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
+use RealRashid\SweetAlert\Facades\Alert as Alert;
 
 class MerekController extends Controller
 {
@@ -26,7 +27,7 @@ class MerekController extends Controller
      */
     public function create()
     {
-        //
+        return view('merek.create');
     }
 
     /**
@@ -35,9 +36,28 @@ class MerekController extends Controller
      * @param  \App\Http\Requests\StoremerekRequest  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(StoremerekRequest $request)
+    public function store(Request $request)
     {
-        //
+        $this->validate($request,[
+            'nm_merek' => 'required|string',
+            'img' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+        ]);
+
+        $image = $request->file('img')->store('public/img');
+        $image = str_replace('public/', 'storage/', $image);
+
+       $merek = merek::create([
+           'nm_merek' => $request->nm_merek,
+           'img' => $image,
+       ]);
+
+       if($merek){
+           Alert::success('Berhasil', 'Data Berhasil Ditambahkan');
+          return redirect()->route('merek.index');
+       }else{
+           Alert::error('Error', 'Data Gagal Ditambahkan');
+         return redirect()->route('merek.index');
+       }
     }
 
     /**
@@ -48,7 +68,7 @@ class MerekController extends Controller
      */
     public function show(merek $merek)
     {
-        //
+        return view('merek.show',compact('merek'));
     }
 
     /**
@@ -59,7 +79,7 @@ class MerekController extends Controller
      */
     public function edit(merek $merek)
     {
-        //
+        return view('merek.edit',compact('merek'));
     }
 
     /**
@@ -69,9 +89,33 @@ class MerekController extends Controller
      * @param  \App\Models\merek  $merek
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdatemerekRequest $request, merek $merek)
+    public function update(Request $request, merek $merek)
     {
-        //
+        $this->validate($request,[
+            'nm_merek' => 'required|string',
+            'img' => 'mimes:jpeg,png,jpg,gif,svg|max:2048',
+        ]);
+
+        if ($request->hasFile('img')) {
+            $image = $request->file('img')->store('public/image');
+            $image = str_replace('public/', 'storage/', $image);
+
+            Storage::delete(str_replace('storage/', 'public/', $merek->img));
+
+            $merek->update([
+                'nm_merek' => $request->nm_merek,
+                'img' => $image,
+                ]);
+                Alert::success('Berhasil', 'Data Berhasil Ditambahkan');
+               return redirect()->route('merek.index');
+
+        } else {
+            $merek->update([
+                'nm_merek' => $request->nm_merek,
+            ]);
+            Alert::success('Berhasil', 'Data Berhasil Ditambahkan');
+          return redirect()->route('merek.index');
+        }
     }
 
     /**
@@ -82,6 +126,11 @@ class MerekController extends Controller
      */
     public function destroy(merek $merek)
     {
-        //
+        if ($merek->img) {
+            Storage::delete(str_replace('storage/', 'public/', $merek->img));
+            $merek->save();
+            $merek->delete();
+            return redirect()->route('merek.index')->with(['success' => 'Data Berhasil Dihapus!']);
+        }
     }
 }

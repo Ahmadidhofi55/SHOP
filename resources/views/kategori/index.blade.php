@@ -1,7 +1,7 @@
 @extends('layout.tables')
-@section('title','Merek')
-@section('dash','Merek')
-@section('table','Merek')
+@section('title','Kategori')
+@section('dash','Kategori')
+@section('table','Kategori')
 @section('header','Dashboard')
 @section('aktif','Dashboard')
 @section('contend')
@@ -9,7 +9,7 @@
     <div class="col-12">
         <div class="card">
             <div class="card-header">
-                <a href="{{ route('merek.create') }}" class="btn btn-primary mb-2" >Create </a>
+                <a href="{{ route('kategori.create') }}" class="btn btn-primary mb-2" >Create</a>
             </div>
             <!-- /.card-header -->
             <div class="card-body">
@@ -17,23 +17,23 @@
                     <thead>
                         <tr>
                             <th>No.</th>
-                            <th>merek</th>
+                            <th>kategori</th>
                             <th>image</th>
                             <th>Aksi</th>
                         </tr>
                     </thead>
                     <tbody>
-                        @forelse ( $merek as $merek )
+                        @forelse ( $kategori as $kategori )
                         <tr>
                             <td>{{ $loop->iteration }} .</td>
-                            <td>{{ $merek->nm_merek }}</td>
+                            <td>{{ $kategori->nm_kategori }}</td>
                             <td>
-                                <img src="{{  asset($merek->img) }}" class="img-circle" width="100px" alt="user-img">
+                                <img src="{{  asset($kategori->img) }}" class="img-circle" width="100px" alt="user-img">
                             </td>
                             <td class="text-center">
-                                <form onsubmit="return confirm('Apakah Anda Yakin ?');" action="{{ route('merek.destroy', $merek->id) }}" method="POST">
-                                    <a href="{{ route('merek.show',$merek->id) }}" class="btn btn-sm btn-success"><i class="fas fa-eye"></i></a>
-                                    <a href="{{ route('merek.edit', $merek->id) }}" class="btn btn-sm btn-primary"><i class="fas fa-pen"></i></a>
+                                <form onsubmit="return confirm('Apakah Anda Yakin ?');" action="{{ route('kategori.destroy', $kategori->id) }}" method="POST">
+                                    <a href="{{ route('kategori.show',$kategori->id) }}" class="btn btn-sm btn-success"><i class="fas fa-eye"></i></a>
+                                    <a href="{{ route('kategori.edit', $kategori->id) }}" class="btn btn-sm btn-primary"><i class="fas fa-pen"></i></a>
                                     @csrf
                                     @method('DELETE')
                                     <button type="submit" class="btn btn-sm btn-danger"><i class="fas fa-trash"></i></button>
@@ -42,7 +42,7 @@
                         </tr>
                         @empty
                         <div class="alert alert-danger">
-                            Data Merek belum Tersedia.
+                            Data Kategori belum Tersedia.
                         </div>
                         @endforelse
                     </tbody>
