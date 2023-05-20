@@ -3,8 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\kategori;
-use App\Http\Requests\StorekategoriRequest;
 use App\Http\Requests\UpdatekategoriRequest;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
+use RealRashid\SweetAlert\Facades\Alert;
 
 class KategoriController extends Controller
 {
@@ -15,7 +17,8 @@ class KategoriController extends Controller
      */
     public function index()
     {
-        //
+        $kategori = kategori::paginate();
+        return view('kategori.index',compact('kategori'));
     }
 
     /**
@@ -25,7 +28,7 @@ class KategoriController extends Controller
      */
     public function create()
     {
-        //
+        return view('kategori.create');
     }
 
     /**
@@ -34,9 +37,28 @@ class KategoriController extends Controller
      * @param  \App\Http\Requests\StorekategoriRequest  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(StorekategoriRequest $request)
+    public function store(Request $request)
     {
-        //
+        $this->validate($request,[
+             'nm_kategori' => 'required|string',
+             'img' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+        ]);
+
+        $image = $request->file('img')->store('public/img');
+        $image = str_replace('public/','storage/',$image);
+
+        $merek = kategori::create([
+            'nm_kategori' => $request->nm_kategori,
+            'img' => $image,
+        ]);
+
+        if($merek){
+            Alert::success('Berhasil', 'Data Berhasil Ditambahkan');
+           return redirect()->route('kategori.index');
+        }else{
+            Alert::error('Error', 'Data Gagal Ditambahkan');
+          return redirect()->route('kategori.index');
+        }
     }
 
     /**
@@ -47,7 +69,7 @@ class KategoriController extends Controller
      */
     public function show(kategori $kategori)
     {
-        //
+        return view('kategori.show',compact('kategori'));
     }
 
     /**
@@ -58,7 +80,7 @@ class KategoriController extends Controller
      */
     public function edit(kategori $kategori)
     {
-        //
+        return view('kategori.edit',compact('kategori'));
     }
 
     /**
@@ -68,9 +90,33 @@ class KategoriController extends Controller
      * @param  \App\Models\kategori  $kategori
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdatekategoriRequest $request, kategori $kategori)
+    public function update(Request $request, kategori $kategori)
     {
-        //
+        $this->validate($request,[
+            'nm_kategori' => 'required|string',
+            'img' => 'mimes:jpeg,png,jpg,gif,svg|max:2048',
+        ]);
+
+        if ($request->hasFile('img')) {
+            $image = $request->file('img')->store('public/image');
+            $image = str_replace('public/', 'storage/', $image);
+
+            Storage::delete(str_replace('storage/', 'public/', $kategori->img));
+
+            $kategori->update([
+                'nm_kategori' => $request->nm_kategori,
+                'img' => $image,
+                ]);
+                Alert::success('Berhasil', 'Data Berhasil Ditambahkan');
+               return redirect()->route('kategori.index');
+
+        } else {
+            $kategori->update([
+                'nm_kategori' => $request->nm_kategori,
+            ]);
+            Alert::success('Berhasil', 'Data Berhasil Ditambahkan');
+          return redirect()->route('kategori.index');
+        }
     }
 
     /**
@@ -81,6 +127,11 @@ class KategoriController extends Controller
      */
     public function destroy(kategori $kategori)
     {
-        //
+        if ($kategori->img) {
+            Storage::delete(str_replace('storage/', 'public/', $kategori->img));
+            $kategori->save();
+            $kategori->delete();
+            return redirect()->route('kategori.index')->with(['success' => 'Data Berhasil Dihapus!']);
+        }
     }
 }

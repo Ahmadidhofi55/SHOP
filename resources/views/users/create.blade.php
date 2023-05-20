@@ -1,6 +1,6 @@
 @extends('layout.admin')
-@section('title','user create')
-@section('dash','user create')
+@section('title','user Create')
+@section('dash','user Create')
 @section('table','user')
 
 @section('contend')
@@ -48,10 +48,10 @@
 
                     <div class="form-group">
                         <label>Pilih Akses</label>
-                        <select class="form-control select2 @error('is_admin') is-invalid @enderror" name="is_admin" id="is-admin" style="width: 100%;">
+                        <select class="form-control select2 @error('is_admin') is-invalid @enderror" name="is_admin" id="is_admin" style="width: 100%;">
                           <option selected="selected">--</option>
-                          <option value="0">Admin</option>
-                          <option value="1">User</option>
+                          <option value="1">Admin</option>
+                          <option value="0">User</option>
                         </select>
                       </div>
 

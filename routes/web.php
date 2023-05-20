@@ -4,7 +4,9 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\KategoriController;
 use App\Http\Controllers\MerekController;
+use App\Http\Controllers\MetodePembayaranController;
 
 /*
 |--------------------------------------------------------------------------
@@ -36,4 +38,6 @@ Route::get('/admin', [HomeController::class, 'adminHome'])->name('admin.home')->
 Route::middleware(['auth'])->group(function () {
     Route::resource('user',UserController::class);
     Route::resource('merek',MerekController::class);
+    Route::resource('kategori',KategoriController::class);
+    Route::resource('wallet',MetodePembayaranController::class);
 });

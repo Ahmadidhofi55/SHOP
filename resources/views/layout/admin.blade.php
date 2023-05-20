@@ -56,12 +56,12 @@ $user = auth()->user();
                 </li>
                 <li class="nav-item dropdown user user-menu">
                     <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">
-                        @if (is_object($user) && property_exists($user, 'img'))
-                        <img src="{{ $user->img }}" class="img-circle" alt="img-user">
+                        @if (is_object($user) && property_exists($user, 'img') && !empty($user->img))
+                        <img src="{{ asset($user->img) }}" class="img-circle" alt="img-user">
                         @else
-                          <i class="fas fa-user fa-1x"></i>
-                        @endif
-                        <span class="hidden-xs">{{ $user->name }}</span>
+                        <i class="fas fa-user fa-1x"></i>
+                      @endif
+                      <span class="hidden-xs">{{ $user->name }}</span>
                     </a>
                     <ul class="dropdown-menu">
                         <!-- User image -->
@@ -167,7 +167,7 @@ $user = auth()->user();
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="pages/widgets.html" class="nav-link">
+                            <a href="{{ route('kategori.index') }}" class="nav-link">
                                 <i class="nav-icon fas fa-list-ol"></i>
                                 <p>
                                     Kategori
@@ -175,7 +175,7 @@ $user = auth()->user();
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="pages/widgets.html" class="nav-link">
+                            <a href="{{ route('wallet.index') }}" class="nav-link">
                                 <i class="nav-icon fas fa-wallet"></i>
                                 <p>
                                     Wallet

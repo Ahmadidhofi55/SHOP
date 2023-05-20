@@ -1,7 +1,7 @@
 @extends('layout.tables')
-@section('title','Merek')
-@section('dash','Merek')
-@section('table','Merek')
+@section('title','Wallet')
+@section('dash','Wallet')
+@section('table','Wallet')
 @section('header','Dashboard')
 @section('aktif','Dashboard')
 @section('contend')
@@ -9,7 +9,7 @@
     <div class="col-12">
         <div class="card">
             <div class="card-header">
-                <a href="{{ route('merek.create') }}" class="btn btn-primary mb-2" >Create </a>
+                <a href="{{ route('wallet.create') }}" class="btn btn-primary mb-2" >Create </a>
             </div>
             <!-- /.card-header -->
             <div class="card-body">
@@ -17,23 +17,23 @@
                     <thead>
                         <tr>
                             <th>No.</th>
-                            <th>merek</th>
+                            <th>wallet</th>
                             <th>image</th>
                             <th>Aksi</th>
                         </tr>
                     </thead>
                     <tbody>
-                        @forelse ( $merek as $merek )
-                        <tr>
+                        @forelse ( $wallet as $wallet )
+                        <tr >
                             <td>{{ $loop->iteration }} .</td>
-                            <td>{{ $merek->nm_merek }}</td>
+                            <td>{{ $wallet->nm_metode }}</td>
                             <td>
-                                <img src="{{  asset($merek->img) }}" class="img-circle" width="100px" alt="user-img">
+                                <img src="{{  asset($wallet->img) }}" class="img-circle" width="100px" alt="wallet-img">
                             </td>
                             <td class="text-center">
-                                <form onsubmit="return confirm('Apakah Anda Yakin ?');" action="{{ route('merek.destroy', $merek->id) }}" method="POST">
-                                    <a href="{{ route('merek.show',$merek->id) }}" class="btn btn-sm btn-success"><i class="fas fa-eye"></i></a>
-                                    <a href="{{ route('merek.edit', $merek->id) }}" class="btn btn-sm btn-primary"><i class="fas fa-pen"></i></a>
+                                <form onsubmit="return confirm('Apakah Anda Yakin ?');" action="{{ route('wallet.destroy', $wallet->id) }}" method="POST">
+                                    <a href="{{ route('wallet.show',$wallet->id) }}" class="btn btn-sm btn-success"><i class="fas fa-eye"></i></a>
+                                    <a href="{{ route('wallet.edit', $wallet->id) }}" class="btn btn-sm btn-primary"><i class="fas fa-pen"></i></a>
                                     @csrf
                                     @method('DELETE')
                                     <button type="submit" class="btn btn-sm btn-danger"><i class="fas fa-trash"></i></button>
@@ -42,7 +42,7 @@
                         </tr>
                         @empty
                         <div class="alert alert-danger">
-                            Data Merek belum Tersedia.
+                            Data Wallet belum Tersedia.
                         </div>
                         @endforelse
                     </tbody>
