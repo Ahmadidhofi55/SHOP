@@ -5,6 +5,10 @@ namespace App\Http\Controllers;
 use App\Models\produk;
 use App\Http\Requests\StoreprodukRequest;
 use App\Http\Requests\UpdateprodukRequest;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Storage;
+use RealRashid\SweetAlert\Facades\Alert;
 
 class ProdukController extends Controller
 {
@@ -15,7 +19,8 @@ class ProdukController extends Controller
      */
     public function index()
     {
-        //
+       $produk = produk::paginate();
+       return view('produk.index',compact('produk'));
     }
 
     /**
@@ -25,7 +30,7 @@ class ProdukController extends Controller
      */
     public function create()
     {
-
+       return view('produk.create');
     }
 
     /**
@@ -34,9 +39,37 @@ class ProdukController extends Controller
      * @param  \App\Http\Requests\StoreprodukRequest  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(StoreprodukRequest $request)
+    public function store(Request $request)
     {
-        //
+        $this->validate($request,[
+            'img' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'nm_produk' => 'required|string',
+            'merek' => 'required|string',
+            'kategori' => 'required|string',
+            'deskripsi' => 'required',
+            'harga' => 'required|integer'
+        ]);
+
+        $image = $request->file('img')->store('public/img');
+        $image = str_replace('public/', 'storage/', $image);
+
+        $produk = produk::create($request,[
+            'nm_produk' => $request->nm_produk,
+            'img' => $image,
+            'merek' => $request->merek,
+            'kategori' => $request->kategori,
+            'deskripsi' => $request->deskripsi,
+            'harga' => $request->harga
+        ]);
+
+        if ($produk) {
+            Alert::success('Berhasil', 'Data Berhasil Ditambahkan');
+            return redirect()->route('produk.index');
+        } else {
+            return redirect()->route('produk.index');
+            Alert::error('Error', 'Data Gagal Ditambahkan');
+        }
+
     }
 
     /**
@@ -47,7 +80,7 @@ class ProdukController extends Controller
      */
     public function show(produk $produk)
     {
-        //
+       return view('produk.show',compact('produk'));
     }
 
     /**
@@ -56,9 +89,9 @@ class ProdukController extends Controller
      * @param  \App\Models\produk  $produk
      * @return \Illuminate\Http\Response
      */
-    public function edit(produk $produk)
+    public function edit( produk $produk)
     {
-        //
+        return view('produk.edit',compact('produk'));
     }
 
     /**
@@ -68,9 +101,43 @@ class ProdukController extends Controller
      * @param  \App\Models\produk  $produk
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdateprodukRequest $request, produk $produk)
+    public function update(Request $request, produk $produk)
     {
-        //
+        $this->validate($request,[
+            'nm_produk' => 'required|string',
+            'img' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'merek' => 'required|string',
+            'kategori' => 'required|string',
+            'deskripsi' => 'required',
+            'harga' => 'required|integer'
+        ]);
+
+        if ($request->hasFile('img')) {
+            $image = $request->file('img')->store('public/image');
+            $image = str_replace('public/', 'storage/', $image);
+
+            Storage::delete(str_replace('storage/', 'public/', $produk->img));
+
+            $produk->update([
+                'nm_produk' => $request->name,
+                'merek' => $request->merek,
+                'kategori' => $request->kategori,
+                'deskripsi' => $request->deskripsi,
+                'harga' => $request->harga,
+                'img' => $image,
+            ]);
+        } else {
+            $produk->update([
+                'nm_produk' => $request->name,
+                'merek' => $request->merek,
+                'kategori' => $request->kategori,
+                'deskripsi' => $request->deskripsi,
+                'harga' => $request->harga,
+            ]);
+        }
+
+        Alert::success('Berhasil', 'Data Berhasil Ditambahkan');
+        return redirect()->route('produk.index');
     }
 
     /**
@@ -81,6 +148,12 @@ class ProdukController extends Controller
      */
     public function destroy(produk $produk)
     {
-        //
+        if ($produk->img) {
+            Storage::delete(str_replace('storage/', 'public/', $produk->img));
+            $produk->save();
+            $produk->delete();
+            Alert::success('Berhasil', 'Data Berhasil Dihapus');
+            return redirect()->route('produk.index')->with(['success' => 'Data Berhasil Dihapus!']);
+        }
     }
 }

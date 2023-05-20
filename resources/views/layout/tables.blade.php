@@ -156,7 +156,7 @@ $user = auth()->user();
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="pages/widgets.html" class="nav-link">
+                            <a href="{{ route('produk.index') }}" class="nav-link">
                                 <i class="nav-icon fas fa-user"></i>
                                 <p>
                                     Produk
@@ -198,7 +198,7 @@ $user = auth()->user();
                             </a>
                             <ul class="nav nav-treeview">
                                 <li class="nav-item">
-                                    <a href="pages/layout/top-nav.html" class="nav-link">
+                                    <a href="{{ route('order.index') }}" class="nav-link">
                                         <img src="./order.png" class="" width="26px" alt="order">
                                         <p>Order</p>
                                     </a>
