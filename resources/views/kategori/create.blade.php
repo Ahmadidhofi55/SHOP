@@ -13,9 +13,9 @@
                     @csrf
                     <div class="form-group">
                         <label class="font-weight-bold">Kategori</label>
-                        <input  type="text" class="form-control @error('nm_kategori') is-invalid @enderror" id="nm_kategori" name="nm_kategori" value="{{ old('nm_kategori') }}" placeholder="Masukkan Kategori">
+                        <input  type="text" class="form-control @error('kategori') is-invalid @enderror" id="kategori" name="kategori"  placeholder="Masukkan Kategori">
                         <!-- error message untuk nama -->
-                        @error('nm_kategori')
+                        @error('kategori')
                             <div class="alert alert-danger mt-2">
                                 {{ $message }}
                             </div>

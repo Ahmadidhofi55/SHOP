@@ -40,7 +40,7 @@ class KategoriController extends Controller
     public function store(Request $request)
     {
         $this->validate($request,[
-             'nm_kategori' => 'required|string',
+             'kategori' => 'required|string',
              'img' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ]);
 
@@ -48,7 +48,7 @@ class KategoriController extends Controller
         $image = str_replace('public/','storage/',$image);
 
         $merek = kategori::create([
-            'nm_kategori' => $request->nm_kategori,
+            'kategori' => $request->kategori,
             'img' => $image,
         ]);
 
@@ -93,7 +93,7 @@ class KategoriController extends Controller
     public function update(Request $request, kategori $kategori)
     {
         $this->validate($request,[
-            'nm_kategori' => 'required|string',
+            'kategori' => 'required|string',
             'img' => 'mimes:jpeg,png,jpg,gif,svg|max:2048',
         ]);
 
@@ -104,7 +104,7 @@ class KategoriController extends Controller
             Storage::delete(str_replace('storage/', 'public/', $kategori->img));
 
             $kategori->update([
-                'nm_kategori' => $request->nm_kategori,
+                'kategori' => $request->kategori,
                 'img' => $image,
                 ]);
                 Alert::success('Berhasil', 'Data Berhasil Ditambahkan');
@@ -112,7 +112,7 @@ class KategoriController extends Controller
 
         } else {
             $kategori->update([
-                'nm_kategori' => $request->nm_kategori,
+                'kategori' => $request->kategori,
             ]);
             Alert::success('Berhasil', 'Data Berhasil Ditambahkan');
           return redirect()->route('kategori.index');

@@ -11,7 +11,7 @@
                 <a href="{{ route('merek.index') }}" class="btn btn-primary"><i class="fa fa-arrow-left"></i></a>
                     <div class="form-group">
                         <label class="font-weight-bold">Merek</label>
-                        <input  type="text" class="form-control " name="merek" value="{{ $merek->nm_merek }}" readonly>
+                        <input  type="text" class="form-control " name="merek" value="{{ $merek->merek }}" readonly>
                     </div>
                     <div class="form-group">
                         <label class="font-weight-bold">Image</label>

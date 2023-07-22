@@ -14,9 +14,9 @@
                     @method('put')
                     <div class="form-group">
                         <label class="font-weight-bold">Kategori</label>
-                        <input id="nm_kategori" value="{{  old('nm_kategori', $kategori->nm_kategori)  }}" type="text" class="form-control @error('nm_kategori') is-invalid @enderror" name="nm_kategori" placeholder="Masukkan Kategori">
+                        <input id="kategori" value="{{  old('kategori', $kategori->kategori)  }}" type="text" class="form-control @error('kategori') is-invalid @enderror" name="kategori" placeholder="Masukkan Kategori">
                         <!-- error message untuk nama -->
-                        @error('nm_kategori')
+                        @error('kategori')
                             <div class="alert alert-danger mt-2">
                                 {{ $message }}
                             </div>

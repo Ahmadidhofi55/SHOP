@@ -26,7 +26,7 @@
                         @forelse ( $kategori as $kategori )
                         <tr>
                             <td>{{ $loop->iteration }} .</td>
-                            <td>{{ $kategori->nm_kategori }}</td>
+                            <td>{{ $kategori->kategori }}</td>
                             <td>
                                 <img src="{{  asset($kategori->img) }}" class="img-circle" width="100px" alt="user-img">
                             </td>

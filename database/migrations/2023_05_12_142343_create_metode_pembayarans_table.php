@@ -15,7 +15,7 @@ return new class extends Migration
     {
         Schema::create('metode_pembayarans', function (Blueprint $table) {
             $table->id();
-            $table->string('nm_metode');
+            $table->string('metode');
             $table->string('img');
             $table->timestamps();
         });

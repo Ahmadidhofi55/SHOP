@@ -22,13 +22,13 @@ return new class extends Migration
             ->references('id')
             ->on('mereks')
             ->onUpdate('cascade')
-            ->onDelete('restrict');
+            ->onDelete('cascade');
             $table->unsignedBigInteger('kategori_id');
             $table->foreign('kategori_id')
             ->references('id')
             ->on('kategoris')
             ->onUpdate('cascade')
-            ->onDelete('restrict');
+            ->onDelete('cascade');
             $table->text('deskripsi');
             $table->string('harga');
             $table->timestamps();

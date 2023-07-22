@@ -11,7 +11,7 @@
                 <a href="{{ route('wallet.index') }}" class="btn btn-primary"><i class="fa fa-arrow-left"></i></a>
                     <div class="form-group">
                         <label class="font-weight-bold">Wallet</label>
-                        <input  type="text" class="form-control " name="name" value="{{ $wallet->nm_metode }}" readonly>
+                        <input  type="text" class="form-control " name="metode" value="{{ $wallet->metode }}" readonly>
                     </div>
                     <div class="form-group">
                         <label class="font-weight-bold">Image</label>

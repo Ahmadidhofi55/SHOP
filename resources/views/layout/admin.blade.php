@@ -248,6 +248,7 @@ $user = auth()->user();
                 <div class="container-fluid">
                     @yield('contend')
                 </div>
+            </section>
         </div>
     </div>
 

@@ -10,7 +10,7 @@ class merek extends Model
     use HasFactory;
 
     protected $fillable = [
-      'nm_merek',
+      'merek',
       'img',
     ];
 }

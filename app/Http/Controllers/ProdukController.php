@@ -3,10 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\produk;
-use App\Http\Requests\StoreprodukRequest;
-use App\Http\Requests\UpdateprodukRequest;
+use App\Models\kategori;
+use App\Models\merek;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
 use RealRashid\SweetAlert\Facades\Alert;
 
@@ -30,7 +29,9 @@ class ProdukController extends Controller
      */
     public function create()
     {
-       return view('produk.create');
+       $merek = merek::paginate();
+       $kategori = kategori::paginate();
+       return view('produk.create',compact('merek','kategori'));
     }
 
     /**
@@ -53,7 +54,7 @@ class ProdukController extends Controller
         $image = $request->file('img')->store('public/img');
         $image = str_replace('public/', 'storage/', $image);
 
-        $produk = produk::create($request,[
+        $produk = produk::create([
             'nm_produk' => $request->nm_produk,
             'img' => $image,
             'merek' => $request->merek,
@@ -66,10 +67,9 @@ class ProdukController extends Controller
             Alert::success('Berhasil', 'Data Berhasil Ditambahkan');
             return redirect()->route('produk.index');
         } else {
-            return redirect()->route('produk.index');
             Alert::error('Error', 'Data Gagal Ditambahkan');
+            return redirect()->route('produk.index');
         }
-
     }
 
     /**

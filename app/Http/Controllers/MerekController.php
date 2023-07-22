@@ -39,7 +39,7 @@ class MerekController extends Controller
     public function store(Request $request)
     {
         $this->validate($request,[
-            'nm_merek' => 'required|string',
+            'merek' => 'required|string',
             'img' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ]);
 
@@ -47,7 +47,7 @@ class MerekController extends Controller
         $image = str_replace('public/', 'storage/', $image);
 
        $merek = merek::create([
-           'nm_merek' => $request->nm_merek,
+           'merek' => $request->merek,
            'img' => $image,
        ]);
 
@@ -92,7 +92,7 @@ class MerekController extends Controller
     public function update(Request $request, merek $merek)
     {
         $this->validate($request,[
-            'nm_merek' => 'required|string',
+            'merek' => 'required|string',
             'img' => 'mimes:jpeg,png,jpg,gif,svg|max:2048',
         ]);
 
@@ -103,7 +103,7 @@ class MerekController extends Controller
             Storage::delete(str_replace('storage/', 'public/', $merek->img));
 
             $merek->update([
-                'nm_merek' => $request->nm_merek,
+                'merek' => $request->merek,
                 'img' => $image,
                 ]);
                 Alert::success('Berhasil', 'Data Berhasil Ditambahkan');
@@ -111,7 +111,7 @@ class MerekController extends Controller
 
         } else {
             $merek->update([
-                'nm_merek' => $request->nm_merek,
+                'merek' => $request->merek,
             ]);
             Alert::success('Berhasil', 'Data Berhasil Ditambahkan');
           return redirect()->route('merek.index');

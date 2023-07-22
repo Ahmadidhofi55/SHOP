@@ -9,7 +9,7 @@ class kategori extends Model
 {
     use HasFactory;
     protected $fillable = [
-      'nm_kategori',
+      'kategori',
       'img'
     ];
 }

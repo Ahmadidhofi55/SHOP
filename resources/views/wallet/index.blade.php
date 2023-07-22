@@ -26,7 +26,7 @@
                         @forelse ( $wallet as $wallet )
                         <tr >
                             <td>{{ $loop->iteration }} .</td>
-                            <td>{{ $wallet->nm_metode }}</td>
+                            <td>{{ $wallet->metode }}</td>
                             <td>
                                 <img src="{{  asset($wallet->img) }}" class="img-circle" width="100px" alt="wallet-img">
                             </td>

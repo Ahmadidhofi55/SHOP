@@ -13,10 +13,10 @@
                     @csrf
                     <div class="form-group">
                         <label class="font-weight-bold">Merek</label>
-                        <input  type="text" class="form-control @error('nm_merek') is-invalid @enderror" id="nm_merek" name="nm_merek" value="{{ old('nm_merek') }}" placeholder="Masukkan Merek">
+                        <input  type="text" class="form-control @error('merek') is-invalid @enderror" id="merek" name="merek" placeholder="Masukkan Merek">
 
                         <!-- error message untuk nama -->
-                        @error('nm_merek')
+                        @error('merek')
                             <div class="alert alert-danger mt-2">
                                 {{ $message }}
                             </div>

@@ -35,6 +35,24 @@
                     </div>
 
                     <div class="form-group">
+                        <label>Nerek</label>
+                        <select name="merek" id="merek" class="form-control select2" style="width: 100%;">
+                            @foreach ($merek as $merek)
+                            <option value="{{ $merek->merek }}" {{ $merek->id == $merek->id ? 'selected' : '' }}>{{ $merek->merek }}</option>
+                            @endforeach
+                        </select>
+                      </div>
+
+                      <div class="form-group">
+                        <label>Kategori</label>
+                        <select name="kategori" id="kategori" class="form-control select2" style="width: 100%;">
+                            @foreach ($kategori as $kategori)
+                            <option  value="{{ $kategori->kategori }}" {{ $kategori->id == $kategori->id ? 'selected' : '' }}>{{ $kategori->kategori }}</option>
+                            @endforeach
+                        </select>
+                      </div>
+
+                    <div class="form-group">
                         <label class="font-weight-bold">Deskripsi</label>
                         <input  type="text" class="form-control @error('deskripsi') is-invalid @enderror" id="deskripsi" name="deskripsi" value="{{ old('deskripsi') }}" placeholder="Masukkan Deskripsi">
 

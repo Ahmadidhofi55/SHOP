@@ -32,7 +32,7 @@
                             <td>{{ $loop->iteration }} .</td>
                             <td>{{ $produk->nm_produk }}</td>
                             <td>
-                                <img src="{{  asset($merek->img) }}" class="img-circle" width="100px" alt="user-img">
+                                <img src="{{  asset($produk->img) }}" class="img-circle" width="100px" alt="user-img">
                             </td>
                             <td>{{ $produk->merek }}</td>
                             <td>{{ $produk->kategori }}</td>
@@ -50,7 +50,7 @@
                         </tr>
                         @empty
                         <div class="alert alert-danger">
-                            Data Merek belum Tersedia.
+                            Data Produk belum Tersedia.
                         </div>
                         @endforelse
                     </tbody>

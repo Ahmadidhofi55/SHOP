@@ -13,9 +13,9 @@
                     @csrf
                     <div class="form-group">
                         <label class="font-weight-bold">Wallet</label>
-                        <input  type="text" class="form-control @error('nm_metode') is-invalid @enderror" id="nm_metode" name="nm_metode" value="{{ old('nm_metode') }}" placeholder="Masukkan Wallet">
+                        <input  type="text" class="form-control @error('metode') is-invalid @enderror" id="metode" name="metode" value="{{ old('metode') }}" placeholder="Masukkan Wallet">
                         <!-- error message untuk nama -->
-                        @error('nm_metode')
+                        @error('metode')
                             <div class="alert alert-danger mt-2">
                                 {{ $message }}
                             </div>

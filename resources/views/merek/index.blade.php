@@ -26,7 +26,7 @@
                         @forelse ( $merek as $merek )
                         <tr>
                             <td>{{ $loop->iteration }} .</td>
-                            <td>{{ $merek->nm_merek }}</td>
+                            <td>{{ $merek->merek }}</td>
                             <td>
                                 <img src="{{  asset($merek->img) }}" class="img-circle" width="100px" alt="user-img">
                             </td>

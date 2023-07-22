@@ -14,9 +14,9 @@
                     @method('put')
                     <div class="form-group">
                         <label class="font-weight-bold">Merek</label>
-                        <input id="nm_merek" value="{{  old('nm_merek', $merek->nm_merek)  }}" type="text" class="form-control @error('nm_merek') is-invalid @enderror" name="nm_merek" placeholder="Masukkan Merek">
+                        <input id="merek" value="{{  old('merek', $merek->merek)  }}" type="text" class="form-control @error('merek') is-invalid @enderror" name="merek" placeholder="Masukkan Merek">
                         <!-- error message untuk nama -->
-                        @error('nm_merek')
+                        @error('merek')
                             <div class="alert alert-danger mt-2">
                                 {{ $message }}
                             </div>

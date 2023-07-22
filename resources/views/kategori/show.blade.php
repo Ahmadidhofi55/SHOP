@@ -11,7 +11,7 @@
                 <a href="{{ route('kategori.index') }}" class="btn btn-primary"><i class="fa fa-arrow-left"></i></a>
                     <div class="form-group">
                         <label class="font-weight-bold">Kategori</label>
-                        <input  type="text" class="form-control " name="kategori" value="{{ $kategori->nm_kategori }}" id="kategori" readonly>
+                        <input  type="text" class="form-control " name="kategori" value="{{ $kategori->kategori }}" id="kategori" readonly>
                     </div>
                     <div class="form-group">
                         <label class="font-weight-bold">Image</label>

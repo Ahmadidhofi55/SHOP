@@ -40,7 +40,7 @@ class MetodePembayaranController extends Controller
     public function store(Request $request)
     {
         $this->validate($request,[
-            'nm_metode' => 'required|string',
+            'metode' => 'required|string',
             'img' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ]);
 
@@ -48,7 +48,7 @@ class MetodePembayaranController extends Controller
         $image = str_replace('public/','storage/',$image);
 
         $wallet = metode_pembayaran::create([
-            'nm_metode' => $request->nm_metode,
+            'metode' => $request->metode,
             'img' => $image,
         ]);
 
@@ -94,7 +94,7 @@ class MetodePembayaranController extends Controller
     public function update(Request $request, metode_pembayaran $wallet)
     {
         $this->validate($request,[
-            'nm_metode' => 'required|string',
+            'metode' => 'required|string',
             'img' => 'mimes:jpeg,png,jpg,gif,svg|max:2048',
         ]);
 
@@ -105,18 +105,18 @@ class MetodePembayaranController extends Controller
             Storage::delete(str_replace('storage/', 'public/', $wallet->img));
 
             $wallet->update([
-                'nm_metode' => $request->nm_metode,
+                'metode' => $request->metode,
                 'img' => $image,
                 ]);
                 Alert::success('Berhasil', 'Data Berhasil Ditambahkan');
-               return redirect()->route('merek.index');
+               return redirect()->route('wallet.index');
 
         } else {
             $wallet->update([
-                'nm_metode' => $request->nm_metode,
+                'metode' => $request->metode,
             ]);
             Alert::success('Berhasil', 'Data Berhasil Ditambahkan');
-          return redirect()->route('merek.index');
+          return redirect()->route('wallet.index');
         }
     }
 
